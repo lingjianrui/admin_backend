@@ -29,7 +29,7 @@ func JWT() gin.HandlerFunc {
 		}
 
 		if code != 20000 {
-			c.JSON(http.StatusUnauthorized, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"code": code,
 				"msg":  codeMap[code],
 				"data": data,

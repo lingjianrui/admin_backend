@@ -14,24 +14,31 @@ func (server *Server) Login(c *gin.Context) {
 	res["code"] = 20000
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	u := &model.User{Name: username, Password: password}
-	ul, e := u.FindUserByCredential(server.DB)
-	if e != nil {
-		fmt.Println(e.Error())
-	}
-	if len(ul) == 1 {
-		signedToken, err := util.GenerateToken(username, password)
-		if err != nil {
-			res["code"] = 1
-			res["error"] = "generate token error"
-			res["message"] = err.Error()
-		} else {
-			token := struct {
-				Token string `json:"token"`
-			}{
-				Token: signedToken,
+	if len(username) > 0 && len(password) > 0 {
+
+		u := &model.User{Name: username, Password: password}
+		ul, e := u.FindUserByCredential(server.DB)
+		if e != nil {
+			fmt.Println(e.Error())
+		}
+		if len(ul) == 1 {
+			signedToken, err := util.GenerateToken(username, password)
+			if err != nil {
+				res["code"] = 1
+				res["error"] = "generate token error"
+				res["message"] = err.Error()
+			} else {
+				token := struct {
+					Token string `json:"token"`
+				}{
+					Token: signedToken,
+				}
+				res["data"] = token
 			}
-			res["data"] = token
+		} else {
+			res["code"] = 1
+			res["error"] = "login error"
+			res["message"] = "用户名或密码不正确"
 		}
 	} else {
 		res["code"] = 1

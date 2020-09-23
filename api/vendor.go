@@ -61,8 +61,9 @@ func (self *Server) DeleteVendor(c *gin.Context) {
 	res := make(map[string]interface{})
 	res["code"] = 20000
 	id := c.Query("id")
-	id_n, _ := strconv.Atoi(id)
-	vendor := &model.Vendor{ID: uint(id_n)}
+	//id_n, _ := strconv.Atoi(id)
+	vendor := &model.Vendor{}
+	vendor.ID = id
 	v, e := vendor.Delete(self.DB)
 	if e != nil {
 		middleware.Logger().Error(e.Error(), "DeleteVendor")

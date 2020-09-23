@@ -2,19 +2,16 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 type Vendor struct {
-	ID          uint      `gorm:"primary_key" json:"id"`
-	Name        string    `gorm:"size:255;not null" json:"vendor_name"`
-	CreatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
-	Banner      string    `json:"banner"`
-	Phone       string    `json:"phone"`
-	Image720    string    `json:"image720"`
-	Description string    `gorm:"size:255" json:"description"`
-	UserId      uint      `json:"user_id"`
+	Base
+	Name        string `gorm:"size:255;not null" json:"vendor_name"`
+	Banner      string `json:"banner"`
+	Phone       string `json:"phone"`
+	Image720    string `json:"image720"`
+	Description string `gorm:"size:255" json:"description"`
+	UserId      uint   `json:"user_id"`
 }
 
 func (self *Vendor) Insert(db *gorm.DB) (*Vendor, error) {
