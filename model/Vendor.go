@@ -10,6 +10,8 @@ type Vendor struct {
 	Banner      string `json:"banner"`
 	Phone       string `json:"phone"`
 	Image720    string `json:"image720"`
+	Latitude    string `json:"latitude"`
+	Longtitude  string `json:"longtitude"`
 	Description string `gorm:"size:255" json:"description"`
 	UserId      uint   `json:"user_id"`
 }

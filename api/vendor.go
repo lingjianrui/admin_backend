@@ -3,6 +3,7 @@ package api
 import (
 	"backend/middleware"
 	"backend/model"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -41,9 +42,11 @@ func (self *Server) CreateVendor(c *gin.Context) {
 	n := c.PostForm("vendor_name")
 	phone := c.PostForm("phone")
 	banner := c.PostForm("banner")
+	latitude := c.PostForm("latitude")
+	longtitude := c.PostForm("longtitude")
 	image720 := c.PostForm("image720")
 	desc := c.PostForm("description")
-	vendor := &model.Vendor{Name: n, Phone: phone, Banner: banner, Image720: image720, Description: desc}
+	vendor := &model.Vendor{Name: n, Phone: phone, Banner: banner, Image720: image720, Description: desc, Latitude: latitude, Longtitude: longtitude}
 	v, e := vendor.Insert(self.DB)
 	if e != nil {
 		middleware.Logger().Error(e.Error(), "create vendor error")
@@ -64,6 +67,7 @@ func (self *Server) DeleteVendor(c *gin.Context) {
 	//id_n, _ := strconv.Atoi(id)
 	vendor := &model.Vendor{}
 	vendor.ID = id
+	fmt.Println(id)
 	v, e := vendor.Delete(self.DB)
 	if e != nil {
 		middleware.Logger().Error(e.Error(), "DeleteVendor")
